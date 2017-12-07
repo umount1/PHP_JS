@@ -1,0 +1,109 @@
+
+\documentclass[pdflatex,a4paper,11pt]{scrartcl}
+\author{J. Schönbohm}
+\date{\today}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+%\usepackage{bookman}
+\usepackage{graphicx} % Einbinden vorhandener Bilder (jpg, png, pdf)
+\usepackage{listings}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\begin{document}
+\section*{Aufgabenblatt 1}
+\lstset{
+   frameround         = fttt,
+   language           = C++,
+   extendedchars      = true,
+   basicstyle         = \ttfamily\small,
+   backgroundcolor    = \color[gray]{0.95},
+   keywordstyle		  = \color{blue}\bfseries,
+   identifierstyle    = ,
+   commentstyle		  = \color{green},
+   morecomment		  = [is]{/*}{*/},
+   stringstyle        = \color{red},
+%   numbers            = left,
+%   numberstyle        = \tiny,
+   frame              = single,
+   framexleftmargin   = 5pt,
+   rulesep            = 5pt,
+   framexrightmargin  = 5pt,
+   framexbottommargin = 5pt,
+   framextopmargin    = 5pt,
+   xleftmargin        = 5pt,
+   xrightmargin       = 5pt,
+   framerule          = 0pt,
+   tabsize            = 3,
+   breaklines         = true,
+   showstringspaces	  = false,
+   captionpos         = b}
+\subsection*{1.1 Quersumme} 
+Schreiben Sie ein Programm, das 
+die Quersumme einer eingegebenen, nat\"urlichen Zahl $n$ rekursiv berechnet. Die rekursive Funktion $q(n)$ folgt folgender Vorschrift:
+$$q(n)=\left\{ 
+\begin{array}{cl}
+n,&n<10\\
+q(\lfloor n/10\rfloor ) + n\ mod\ 10, &n\ge 10
+\end{array}
+\right.$$
+\subsection*{L\"osung} 
+\begin{lstlisting}
+int q(int n) // Variante 1
+{
+    if(10 > n) return n; // Rekursionsanker
+    return q(n/10) + n % 10;
+}
+\end{lstlisting}
+\begin{lstlisting}
+int q(int n) // Variante 2
+{
+    return (10 > n) ? n : q(n/10) + n % 10;
+}
+\end{lstlisting}
+
+\subsection*{1.2 Gebiete} 
+Wenn man ein konvexes Gebiet $M$ durch eine Gerade teilt entstehen 2 Gebiete. Teilt man $M$ durch 2 Geraden, so entstehen maximal 4 Gebiete. \newline
+Schreiben Sie ein Programm, das 
+die maximale Anzahl an Gebieten berechnet, die man erh\"alt, wenn man $M$ durch $n$ Geraden teilt. Die Funktionsvorschrift f\"ur $f(n)$ lautet:
+
+$$q(n)=\left\{ 
+\begin{array}{cl}
+2,&n=1\\
+f(n-1) + n, &n\ge 2
+\end{array}
+\right.$$
+\subsection*{L\"osung} 
+\begin{lstlisting}
+int f(int n)
+{
+    if(1 > n) return -1; // Fehler!
+    if(1 == n) return 2; // Rekursionsanker
+    return f(n-1) + n;
+}
+\end{lstlisting}
+
+\subsection*{1.3 Schnelles Potenzieren} 
+Schreiben Sie ein Programm, f\"ur schnelles Potenzieren $x^y$ mit $x\in\mathbb{R}$ und $y\in\mathbb{N}$:
+
+$$x^y=\left\{ 
+\begin{array}{cl}
+x^\frac{y}{2}\cdot x^\frac{y}{2},&\mbox{wenn }y\mbox{ gerade}\\
+x\cdot x^{\lfloor\frac{y}{2}\rfloor}\cdot x^{\lfloor\frac{y}{2}\rfloor} , &\mbox{ sonst}
+\end{array}
+\right.$$
+\subsection*{L\"osung} 
+\begin{lstlisting}
+double f(double x, int y)
+{
+    double h;
+    if(1 > y) return -1; // Fehler!
+    if(1 == y) return x; // Rekursionsanker
+    h = f(x, y/2);
+    if(1 & y) return x*h*h; // 1 & y bildet das bin\"are UND
+    else return h*h;
+}
+\end{lstlisting}
+
+\end{document}
